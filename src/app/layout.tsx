@@ -1,6 +1,8 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import { Cairo } from "next/font/google";
+import { CartProvider } from "@/components/CartContext"
+
 
 const cairo = Cairo({
   subsets: ['arabic'],
@@ -18,7 +20,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl">
           <body className={cairo.className}>
         <Navbar />
-        <main>{children}</main>
+   
+           <CartProvider>
+          {children}
+        </CartProvider>
+    
       </body>
     </html>
   )

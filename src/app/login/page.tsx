@@ -2,6 +2,7 @@
 import { signIn } from "next-auth/react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { authOptions } from "@/lib/authOptions"
 
 export default function LoginPage() {
   const router = useRouter()
