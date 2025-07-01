@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "../api/auth/[...nextauth]/route"
+// import { authOptions } from "../api/auth/[...nextauth]/route"
 import { prisma } from "@/lib/prisma"
+import NextAuth from "next-auth"
+import { authOptions } from "@/lib/authOptions"
 
+const handler = NextAuth(authOptions)
+
+ 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) {

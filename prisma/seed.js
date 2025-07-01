@@ -1,6 +1,43 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+async function main() {
+  const email = "h.bezan@becom.ly"
+  const password = "admin123"  // غيرها لكلمة سر مناسبة
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  // تحقق هل المستخدم موجود
+  const existingAdmin = await prisma.user.findUnique({ where: { email } })
+
+  if (!existingAdmin) {
+    await prisma.user.create({
+      data: {
+        name: "Admin",
+        email,
+        password: hashedPassword, // خزن كلمة السر مشفرة
+        role: "ADMIN", // أو حسب حقل الرول عندك
+      },
+    })
+    console.log("تم إنشاء المستخدم الإداري الافتراضي بنجاح")
+  } else {
+    console.log("المستخدم الإداري موجود مسبقاً")
+  }
+}
+
+main()
+  .catch(e => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })
+
+
+
+
+
+
 const products = [
   { name: "نظارة شمسية", price: 120 },
   { name: "عدسات لاصقة", price: 75 },
